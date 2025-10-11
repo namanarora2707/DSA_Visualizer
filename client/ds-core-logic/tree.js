@@ -1,0 +1,5 @@
+export function init(){ return null; }
+export function insert(root, value){ if(root==null) return { value, left:null, right:null }; if(value<root.value) return { ...root, left: insert(root.left, value) }; if(value>root.value) return { ...root, right: insert(root.right, value) }; return root; }
+function findMin(n){ return n.left ? findMin(n.left) : n; }
+export function remove(root, value){ if(root==null) return null; if(value<root.value) return { ...root, left: remove(root.left, value) }; if(value>root.value) return { ...root, right: remove(root.right, value) }; if(!root.left) return root.right; if(!root.right) return root.left; const succ=findMin(root.right); return { value:succ.value, left:root.left, right: remove(root.right, succ.value) }; }
+export function apply(curr, action){ let next=curr; switch(action.op){ case "insert": next=insert(curr, Number(action.args)); return { next, meta:{ name:"Insert", complexity:"O(h)", detail:String(action.args)} }; case "delete": next=remove(curr, Number(action.args)); return { next, meta:{ name:"Delete", complexity:"O(h)", detail:String(action.args)} }; default: return { next, meta:{ name:"No-op", complexity:"-" } }; } }

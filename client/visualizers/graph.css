@@ -1,0 +1,338 @@
+/* ============================================
+   DSA VISUALIZATION - Enhanced Styling System
+   ============================================ */
+
+/* Empty State */
+.empty {
+  color: #64748b;
+  font-size: 0.95rem;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 12px;
+  border: 2px dashed #cbd5e1;
+  transition: all 0.3s ease;
+}
+
+.empty:hover {
+  border-color: #94a3b8;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+/* Graph Container - Responsive & Centered */
+.graph-wrap {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+}
+
+/* SVG Canvas */
+svg {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  background: transparent;
+  border-radius: 8px;
+}
+
+/* Canvas Container - Allow overflow for animations */
+.canvas svg {
+  overflow: visible;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+}
+
+/* ============================================
+   NODE STYLING - Data Structure Elements
+   ============================================ */
+
+/* Base Circle/Node Styling */
+svg circle {
+  vector-effect: non-scaling-stroke;
+  stroke: #3b82f6;
+  stroke-width: 2.5px;
+  fill: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.2));
+}
+
+svg circle:hover {
+  fill: #dbeafe;
+  stroke: #2563eb;
+  stroke-width: 3px;
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+  transform: scale(1.05);
+}
+
+/* Active/Selected Node */
+svg circle.active {
+  fill: #bfdbfe;
+  stroke: #1d4ed8;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 6px 12px rgba(29, 78, 216, 0.4));
+}
+
+/* Visited Node (for traversal algorithms) */
+svg circle.visited {
+  fill: #d1fae5;
+  stroke: #10b981;
+  stroke-width: 2.5px;
+}
+
+/* Current/Processing Node */
+svg circle.current {
+  fill: #fef3c7;
+  stroke: #f59e0b;
+  stroke-width: 3px;
+  animation: nodePulse 1.5s ease-in-out infinite;
+}
+
+/* Completed Node */
+svg circle.completed {
+  fill: #bbf7d0;
+  stroke: #16a34a;
+  stroke-width: 2.5px;
+}
+
+/* Error/Invalid Node */
+svg circle.error {
+  fill: #fecaca;
+  stroke: #dc2626;
+  stroke-width: 3px;
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Pulsing Animation */
+svg circle.pulsing {
+  animation: nodePulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ============================================
+   TEXT LABELS - Readable & Accessible
+   ============================================ */
+
+svg text {
+  user-select: text;
+  font-family: 'Inter', 'SF Pro', system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  fill: #0f172a;
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  transition: all 0.3s ease;
+}
+
+/* Label variants for different states */
+svg text.label-active {
+  fill: #1e40af;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+svg text.label-visited {
+  fill: #047857;
+}
+
+svg text.label-current {
+  fill: #d97706;
+  font-weight: 700;
+}
+
+svg text.label-small {
+  font-size: 0.85rem;
+  fill: #475569;
+  font-weight: 500;
+}
+
+/* ============================================
+   EDGES/CONNECTIONS - Lines & Paths
+   ============================================ */
+
+svg line,
+svg path.edge {
+  stroke: #cbd5e1;
+  stroke-width: 2px;
+  fill: none;
+  transition: all 0.3s ease;
+  stroke-linecap: round;
+}
+
+svg line:hover,
+svg path.edge:hover {
+  stroke: #94a3b8;
+  stroke-width: 3px;
+}
+
+/* Active/Highlighted Edge */
+svg .edge-active,
+svg line.active,
+svg path.active {
+  stroke: #3b82f6;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+}
+
+/* Traversed Edge */
+svg .edge-traversed {
+  stroke: #10b981;
+  stroke-width: 3px;
+  stroke-dasharray: 5, 5;
+  animation: dash 1s linear infinite;
+}
+
+/* Directed Edge (with arrow) */
+svg marker {
+  fill: #cbd5e1;
+  transition: fill 0.3s ease;
+}
+
+svg marker.active {
+  fill: #3b82f6;
+}
+
+/* Weighted Edge Label */
+svg text.edge-weight {
+  font-size: 0.875rem;
+  fill: #64748b;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* ============================================
+   SPECIAL DATA STRUCTURE ELEMENTS
+   ============================================ */
+
+/* Array/List Cell */
+svg rect.cell {
+  fill: #ffffff;
+  stroke: #3b82f6;
+  stroke-width: 2px;
+  rx: 4;
+  transition: all 0.3s ease;
+}
+
+svg rect.cell:hover {
+  fill: #eff6ff;
+  stroke: #2563eb;
+}
+
+svg rect.cell.active {
+  fill: #dbeafe;
+  stroke: #1d4ed8;
+  stroke-width: 3px;
+}
+
+/* Stack/Queue Highlight */
+svg rect.stack-top {
+  fill: #fef3c7;
+  stroke: #f59e0b;
+  stroke-width: 3px;
+}
+
+/* Tree Connection Lines */
+svg line.tree-edge {
+  stroke: #94a3b8;
+  stroke-width: 2.5px;
+}
+
+svg line.tree-edge.left-child {
+  stroke: #8b5cf6;
+}
+
+svg line.tree-edge.right-child {
+  stroke: #ec4899;
+}
+
+/* ============================================
+   ANIMATIONS & KEYFRAMES
+   ============================================ */
+
+@keyframes nodePulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* New element animation */
+svg circle.new,
+svg rect.new {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.highlight-path {
+  stroke: #8b5cf6 !important;
+  stroke-width: 4px !important;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6));
+}
+
+.dim {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .graph-wrap {
+    padding: 1rem;
+  }
+  
+  svg text {
+    font-size: 0.875rem;
+  }
+  
+  svg circle {
+    stroke-width: 2px;
+  }
+}

@@ -12,7 +12,7 @@ export default function Login() {
     setError("");
 
     try {
-      const response = await fetch("/api/v1/user/login", {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

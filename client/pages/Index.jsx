@@ -25,11 +25,11 @@ export default function Index() {
         <DSSelector
           onSelect={(key) => navigate(`/visualizer/${key}`)}
           items={[
-            { key: "linked-list", title: "Linked List", description: "Singly list: insert, delete, update", icon: "../assets/linklist.png" },
-            { key: "stack", title: "Stack", description: "Push, pop, peek", icon: "../assets/stack.png" },
-            { key: "queue", title: "Queue", description: "Enqueue and dequeue", icon: "../assets/queue.png" },
-            { key: "tree", title: "Binary Search Tree", description: "Insert and delete nodes", icon: "../assets/bst.png" },
-            { key: "graph", title: "Graph", description: "Add/remove nodes and edges", icon: "../assets/graph.png" }
+            { key: "linked-list", title: "Linked List", description: "Singly list: insert, delete, update", icon: "/linklist.png" },
+            { key: "stack", title: "Stack", description: "Push, pop, peek", icon: "/stack.png" },
+            { key: "queue", title: "Queue", description: "Enqueue and dequeue", icon: "/queue.png" },
+            { key: "tree", title: "Binary Search Tree", description: "Insert and delete nodes", icon: "/bst.png" },
+            { key: "graph", title: "Graph", description: "Add/remove nodes and edges", icon: "/graph.png" }
           ]}
         />
       </main>

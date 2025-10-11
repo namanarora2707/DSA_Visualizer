@@ -4,10 +4,10 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   server: {
     host: "::",
-    port: 8080,
+    port: 4000,
     proxy: {
       "/api": {
-        target: "https://dsa-visualizer-rh1k.onrender.com:3000",
+        target: "https://dsa-visualizer-rh1k.onrender.com",
         changeOrigin: true,
         secure: false,
       },

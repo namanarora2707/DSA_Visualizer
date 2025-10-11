@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import DSSelector from "../components/DSSelector.jsx";
 import "./index.css";
+import linklistIcon from "../assets/linklist.png";
+import stackIcon from "../assets/stack.png";
+import queueIcon from "../assets/queue.png";
+import bstIcon from "../assets/bst.png";
+import graphIcon from "../assets/graph.png";
 
 export default function Index() {
   const navigate = useNavigate();
@@ -25,11 +30,11 @@ export default function Index() {
         <DSSelector
           onSelect={(key) => navigate(`/visualizer/${key}`)}
           items={[
-            { key: "linked-list", title: "Linked List", description: "Singly list: insert, delete, update", icon: "../assets/linklist.png" },
-            { key: "stack", title: "Stack", description: "Push, pop, peek", icon: "../assets/stack.png" },
-            { key: "queue", title: "Queue", description: "Enqueue and dequeue", icon: "../assets/queue.png" },
-            { key: "tree", title: "Binary Search Tree", description: "Insert and delete nodes", icon: "../assets/bst.png" },
-            { key: "graph", title: "Graph", description: "Add/remove nodes and edges", icon: "../assets/graph.png" }
+            { key: "linked-list", title: "Linked List", description: "Singly list: insert, delete, update", icon: linklistIcon },
+            { key: "stack", title: "Stack", description: "Push, pop, peek", icon: stackIcon },
+            { key: "queue", title: "Queue", description: "Enqueue and dequeue", icon: queueIcon },
+            { key: "tree", title: "Binary Search Tree", description: "Insert and delete nodes", icon: bstIcon },
+            { key: "graph", title: "Graph", description: "Add/remove nodes and edges", icon: graphIcon }
           ]}
         />
       </main>

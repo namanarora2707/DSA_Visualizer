@@ -30,7 +30,9 @@ export default function Index() {
             { key: "queue", title: "Queue", description: "Enqueue and dequeue", icon: "/queue.png" },
             { key: "tree", title: "Binary Search Tree", description: "Insert and delete nodes", icon: "/bst.png" },
             { key: "graph", title: "Graph", description: "Add/remove nodes and edges", icon: "/graph.png" },
-            { key: "recursion", title: "Recursion", description: "Visualize call stack and recursive functions", icon: "/recursion.png" }
+            { key: "recursion", title: "Recursion Call Stack", description: "Visualize function call stack", icon: "/recursion.png" },
+            { key: "doubly-linked-list", title: "Doubly Linked List", description: "Visualize doubly linked list structure", icon: "/dll.png" },
+            { key: "binary-tree", title: "Binary Tree", description: "Visualize binary tree structure", icon: "/bt.png" }
           ]}
         />
       </main>

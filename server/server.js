@@ -14,7 +14,7 @@ connectDb();
 
 // ✅ Use CORS (you can allow all origins or restrict later)
 app.use(cors({
-  origin: "*", // or specify frontend domain like: "http://localhost:5173"
+  origin: "*", // Allow all origins for Render deployment
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
@@ -31,6 +31,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
 });

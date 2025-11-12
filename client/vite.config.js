@@ -3,15 +3,8 @@ import path from "path";
 import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   server: {
-    host: "::",
+    host: "0.0.0.0",
     port: 4000,
-    proxy: {
-      "/api": {
-        target: "https://dsa-visualizer-rh1k.onrender.com",
-        changeOrigin: true,
-        secure: false,
-      },
-    },
   },
   build: { 
     outDir: "dist",

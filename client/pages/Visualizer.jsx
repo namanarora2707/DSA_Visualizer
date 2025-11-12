@@ -94,10 +94,6 @@ export default function Visualizer(){
           <div className="panel__header"><h2>Controls</h2><button className="link small" onClick={reset}>Reset</button></div>
           {type === "recursion" ? (
             <RecursionControlPanel onOperate={operate} />
-          ) : type === "doubly-linked-list" ? (
-            <DoublyLinkedListControlPanel onOperate={operate} />
-          ) : type === "binary-tree" ? (
-            <BinaryTreeControlPanel onOperate={operate} />
           ) : (
             <ControlPanel type={type} onOperate={operate} />
           )}
@@ -110,21 +106,8 @@ export default function Visualizer(){
           {type === "tree" && <TreeUI root={state.structure} />}
           {type === "graph" && <GraphUI graph={state.structure} />}
           {type === "recursion" && <RecursionUI state={state.structure} />}
-          {type === "doubly-linked-list" && (
-            <DoublyLinkedListUI 
-              nodes={DLL.asArray(state.structure)} 
-              size={DLL.getSize(state.structure)} 
-              current={DLL.getCurrent(state.structure)} 
-            />
-          )}
-          {type === "binary-tree" && (
-            <BinaryTreeUI 
-              nodes={BT.toArray(state.structure)} 
-              root={BT.getRoot(state.structure)} 
-              current={BT.getCurrent(state.structure)} 
-              traversalPath={BT.getTraversalPath(state.structure)} 
-            />
-          )}
+          {type === "doubly-linked-list" && <DoublyLinkedListUI nodes={DLL.asArray(state.structure)} />}
+          {type === "binary-tree" && <BinaryTreeUI root={state.structure} />}
         </section>
 
         <aside className="panel">

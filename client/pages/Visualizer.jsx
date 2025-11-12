@@ -1,17 +1,20 @@
 import { useMemo, useReducer, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import ControlPanel from "../components/ControlPanel.jsx";
+import RecursionControlPanel from "../components/RecursionControlPanel.jsx";
 import ComplexityBar from "../components/ComplexityBar.jsx";
 import LinkedListUI from "../visualizers/LinkedListUI.jsx";
 import StackUI from "../visualizers/StackUI.jsx";
 import QueueUI from "../visualizers/QueueUI.jsx";
 import TreeUI from "../visualizers/TreeUI.jsx";
 import GraphUI from "../visualizers/GraphUI.jsx";
+import RecursionUI from "../visualizers/RecursionUI.jsx";
 import * as LL from "../ds-core-logic/linkedList.js";
 import * as ST from "../ds-core-logic/stack.js";
 import * as Q from "../ds-core-logic/queue.js";
 import * as T from "../ds-core-logic/tree.js";
 import * as G from "../ds-core-logic/graph.js";
+import * as R from "../ds-core-logic/recursion.js";
 import "./visualizer.css";
 
 function reducer(state, action){
@@ -32,6 +35,7 @@ function initByType(type){
     case "queue": return Q.init();
     case "tree": return T.init();
     case "graph": return G.init();
+    case "recursion": return R.init();
     default: return null;
   }
 }
@@ -42,7 +46,7 @@ export default function Visualizer(){
   const [key, setKey] = useState(0);
   const [state, dispatch] = useReducer(reducer, { structure: initByType(type), logs: [], lastOp: null });
 
-  const name = useMemo(()=>({"linked-list":"Linked List",stack:"Stack",queue:"Queue",tree:"Binary Search Tree",graph:"Graph"})[type]||"Unknown",[type]);
+  const name = useMemo(()=>({"linked-list":"Linked List",stack:"Stack",queue:"Queue",tree:"Binary Search Tree",graph:"Graph",recursion:"Recursion Visualization"})[type]||"Unknown",[type]);
 
   const operate = (action)=>{
     if(!type) return;
@@ -54,6 +58,7 @@ export default function Visualizer(){
         case "queue": ({ next, meta } = Q.apply(next, action)); break;
         case "tree": ({ next, meta } = T.apply(next, action)); break;
         case "graph": ({ next, meta } = G.apply(next, action)); break;
+        case "recursion": ({ next, meta } = R.apply(next, action)); break;
       }
       dispatch({ type:"set", payload: next, op: meta||undefined });
     }catch(e){
@@ -74,7 +79,11 @@ export default function Visualizer(){
       <div className="container grid">
         <aside className="panel">
           <div className="panel__header"><h2>Controls</h2><button className="link small" onClick={reset}>Reset</button></div>
-          <ControlPanel type={type} onOperate={operate} />
+          {type === "recursion" ? (
+            <RecursionControlPanel onOperate={operate} />
+          ) : (
+            <ControlPanel type={type} onOperate={operate} />
+          )}
         </aside>
 
         <section key={key} className="canvas">
@@ -83,6 +92,7 @@ export default function Visualizer(){
           {type === "queue" && <QueueUI values={Q.asArray(state.structure)} />}
           {type === "tree" && <TreeUI root={state.structure} />}
           {type === "graph" && <GraphUI graph={state.structure} />}
+          {type === "recursion" && <RecursionUI state={state.structure} />}
         </section>
 
         <aside className="panel">

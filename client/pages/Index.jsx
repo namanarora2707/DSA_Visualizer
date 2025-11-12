@@ -29,7 +29,8 @@ export default function Index() {
             { key: "stack", title: "Stack", description: "Push, pop, peek", icon: "/stack.png" },
             { key: "queue", title: "Queue", description: "Enqueue and dequeue", icon: "/queue.png" },
             { key: "tree", title: "Binary Search Tree", description: "Insert and delete nodes", icon: "/bst.png" },
-            { key: "graph", title: "Graph", description: "Add/remove nodes and edges", icon: "/graph.png" }
+            { key: "graph", title: "Graph", description: "Add/remove nodes and edges", icon: "/graph.png" },
+            { key: "recursion", title: "Recursion", description: "Visualize call stack and recursive functions", icon: "/recursion.png" }
           ]}
         />
       </main>

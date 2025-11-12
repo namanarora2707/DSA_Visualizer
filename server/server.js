@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors"); // ✅ Import CORS
+const path = require("path");
 const { connectDb } = require("./config/database");
 const userRouter = require("./routes/user.Routes");
 
@@ -20,10 +21,14 @@ app.use(cors({
 
 app.use(express.json());
 
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
 app.use("/api/v1/user", userRouter);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to Nodejs Authentication Tutorial");
+// Handle React routing, return all requests to React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
 
 app.listen(PORT, () => {

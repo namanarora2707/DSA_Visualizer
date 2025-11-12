@@ -13,7 +13,15 @@ export default defineConfig({
       },
     },
   },
-  build: { outDir: "dist" },
+  build: { 
+    outDir: "dist",
+    // Ensure proper base path for deployment
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
   plugins: [react()],
   // Map '@' to the client directory. Use __dirname (the directory of this config file)
   // to avoid resolving to 'client/client' when running from inside the client folder.

@@ -5,11 +5,13 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/user/login`, {
@@ -30,6 +32,8 @@ export default function Login() {
       navigate("/dashboard");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,7 +63,9 @@ export default function Login() {
             />
           </div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="btn btn-primary">Login</button>
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>

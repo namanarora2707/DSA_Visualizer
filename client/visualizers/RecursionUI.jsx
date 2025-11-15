@@ -79,6 +79,7 @@ export default function RecursionUI({ state }) {
         {functionType === "doublyLinkedList" && <DoublyLinkedListVisualization callStack={callStack} />}
         {functionType === "factorial" && <FactorialVisualization callStack={callStack} parameters={parameters} />}
         {functionType === "fibonacci" && <FibonacciVisualization callStack={callStack} parameters={parameters} />}
+        {functionType === "custom" && <CustomVisualization callStack={callStack} parameters={parameters} />}
       </div>
     </div>
   );
@@ -178,6 +179,27 @@ function FibonacciVisualization({ callStack, parameters }) {
         {callStack.map(call => (
           <div key={call.id} className="branch-item" style={{ marginLeft: `${call.depth * 20}px` }}>
             fib({call.parameters.n})
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Custom Visualization for generic patterns
+function CustomVisualization({ callStack }) {
+  return (
+    <div className="custom-visualization">
+      <p>Generic Recursion Visualization</p>
+      <div className="custom-stack">
+        {callStack.map(call => (
+          <div key={call.id} className="custom-frame">
+            <div className="frame-function">{call.functionType}</div>
+            <div className="frame-params">
+              {Object.entries(call.parameters || {}).map(([k,v]) => (
+                <span className="param" key={k}>{k}: {String(v)}</span>
+              ))}
+            </div>
           </div>
         ))}
       </div>

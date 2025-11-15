@@ -8,6 +8,8 @@
 .dll__item {
   display: flex;
   align-items: center;
+  /* make the item a positioned container so absolute children align correctly */
+  position: relative;
 }
 
 .node {
@@ -30,8 +32,25 @@
 }
 
 .arrow-back {
+  /* draw reverse arrow just before the current node; position relative to item ensures correct alignment */
   position: absolute;
   left: -25px;
   color: #9ca3af;
   font-size: 24px;
 }
+
+.node-label {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 10px;
+  color: #374151;
+}
+
+.node.head { border-color: #34d399; }
+.node.tail { border-color: #60a5fa; }
+.node.middle { border-color: #9ca3af; }

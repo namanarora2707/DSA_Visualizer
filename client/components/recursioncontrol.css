@@ -117,3 +117,14 @@
 .explanation strong {
   color: #1f2937;
 }
+
+.code-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  background-color: #fff;
+  font-size: 14px;
+}

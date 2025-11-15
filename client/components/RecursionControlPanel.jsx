@@ -1,18 +1,33 @@
 import React, { useState } from "react";
+import { getCallSequenceFromCode } from "../utils/openrouter.js";
 import "./recursioncontrol.css";
 
 export default function RecursionControlPanel({ onOperate }) {
   const [functionType, setFunctionType] = useState("factorial");
   const [parameter, setParameter] = useState(5);
+  const [pattern, setPattern] = useState("decrement");
+  const [functionCode, setFunctionCode] = useState("");
 
   const handleStart = () => {
-    onOperate({
-      type: "START_RECURSION",
-      payload: {
-        functionType,
-        parameters: getParametersForFunction(functionType, parameter)
-      }
-    });
+    // If the user provided a custom function and wants AI assistance, try to load call sequence first
+    if (functionType === 'custom' && pattern === 'none' && functionCode) {
+      // start and then request calls
+      onOperate({ type: "START_RECURSION", payload: { functionType, parameters: getParametersForFunction(functionType, parameter), pattern } });
+      getCallSequenceFromCode(functionCode, 12).then((seq) => {
+        if (seq && seq.length > 0) {
+          onOperate({ type: "LOAD_CALLS", payload: { calls: seq } });
+        }
+      });
+    } else {
+      onOperate({
+        type: "START_RECURSION",
+        payload: {
+          functionType,
+          parameters: getParametersForFunction(functionType, parameter),
+          pattern
+        }
+      });
+    }
   };
 
   const handleStepForward = () => {
@@ -56,8 +71,20 @@ export default function RecursionControlPanel({ onOperate }) {
           <option value="fibonacci">Fibonacci</option>
           <option value="binaryTree">Binary Tree Traversal</option>
           <option value="doublyLinkedList">Doubly Linked List</option>
+          <option value="custom">Custom (use the pattern option)</option>
         </select>
       </div>
+      {functionType === 'custom' && (
+        <div className="control-group">
+          <label htmlFor="pattern">Custom Pattern</label>
+          <select id="pattern" value={pattern} onChange={(e) => setPattern(e.target.value)} className="function-select">
+            <option value="decrement">Decrement (n → n-1)</option>
+            <option value="split">Split (example: fib style, n → n - 1 and n - 2)</option>
+            <option value="none">None (single-step call)</option>
+          </select>
+          <small className="hint">Use a custom pattern when visualizing functions other than built-ins</small>
+        </div>
+      )}
 
       <div className="control-group">
         <label htmlFor="parameter">Parameter:</label>
@@ -76,6 +103,14 @@ export default function RecursionControlPanel({ onOperate }) {
             : "Enter starting value"}
         </small>
       </div>
+
+      {functionType === 'custom' && (
+        <div className="control-group">
+          <label htmlFor="functionCode">Custom Function Code (optional)</label>
+          <textarea id="functionCode" value={functionCode} onChange={(e) => setFunctionCode(e.target.value)} placeholder={"function f(n) { if(n<=1) return n; return f(n-1) + f(n-2) }"} className="code-input" />
+          <small className="hint">Enter function code to let OpenRouter try to generate a call sequence (requires API key).</small>
+        </div>
+      )}
 
       <div className="button-group">
         <button onClick={handleStart} className="btn btn-primary">

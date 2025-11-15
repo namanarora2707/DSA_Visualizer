@@ -75,14 +75,15 @@ export default function ControlPanel({ type, onOperate }){
         return (
           <div className="stack">
             <input value={value} onChange={(e)=>setValue(e.target.value)} placeholder="Value" className="input" />
+            <input value={value2} onChange={(e)=>setValue2(e.target.value)} placeholder="Index (for Insert At / Update)" className="input" />
             <div className="grid2">
               <button className="btn" onClick={()=>onOperate({ op:"insertHead", args:value })}>Insert Head</button>
               <button className="btn" onClick={()=>onOperate({ op:"insertTail", args:value })}>Insert Tail</button>
               <button className="btnabcd" onClick={()=>onOperate({ op:"delete", args:value })}>Delete</button>
               <br />
-              <button className="btnabcd" onClick={()=>onOperate({ op:"insertAt", args:value })}>Insert At (index--value)</button>
-              <button className="btnabcd" onClick={()=>onOperate({ op:"deleteAt", args:value })}>Delete At (index)</button>
-              <button className="btnabcd" onClick={()=>onOperate({ op:"update", args:value })}>Update (index--newvalue)</button>
+              <button className="btnabcd" onClick={()=>onOperate({ op:"insertAt", args:`${value2}--${value}` })}>Insert At (index--value)</button>
+              <button className="btnabcd" onClick={()=>onOperate({ op:"deleteAt", args:value2 })}>Delete At (index)</button>
+              <button className="btnabcd" onClick={()=>onOperate({ op:"update", args:`${value2}--${value}` })}>Update (index--newvalue)</button>
             </div>
           </div>
         );

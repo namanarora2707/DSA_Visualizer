@@ -69,8 +69,6 @@ export default function RecursionControlPanel({ onOperate }) {
         >
           <option value="factorial">Factorial</option>
           <option value="fibonacci">Fibonacci</option>
-          <option value="binaryTree">Binary Tree Traversal</option>
-          <option value="doublyLinkedList">Doubly Linked List</option>
           <option value="custom">Custom (use the pattern option)</option>
         </select>
       </div>

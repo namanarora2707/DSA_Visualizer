@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require("cors"); // ✅ Import CORS
+const cors = require("cors");
 const path = require("path");
 const { connectDb } = require("./config/database");
 const userRouter = require("./routes/user.Routes");
@@ -15,9 +15,9 @@ const clientDistPath = path.resolve(__dirname, "../client/dist");
 
 connectDb();
 
-// ✅ Use CORS (you can allow all origins or restrict later)
+// Use CORS
 app.use(cors({
-  origin: "*", // Allow all origins for Render deployment
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
@@ -27,9 +27,11 @@ app.use(express.json());
 // Serve static files from the React app build directory
 app.use(express.static(clientDistPath));
 
+// API routes (must come before catch-all)
 app.use("/api/v1/user", userRouter);
 
-// Handle React routing, return all requests to React app
+// Handle React routing — catch all other requests and serve index.html
+// This must be AFTER all other routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(clientDistPath, "index.html"), (err) => {
     if (err) {
